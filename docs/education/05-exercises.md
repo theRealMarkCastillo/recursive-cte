@@ -7,7 +7,7 @@ Work through the exercises in order. Each one changes only a copy of an existing
 Run the walk from `orders`, then predict the rows before looking at the output.
 
 ```sh
-python -m scripts.walk_graph --start orders
+python -m scripts.walk_graph --start orders --max-depth 8
 ```
 
 Questions:
@@ -21,7 +21,7 @@ Questions:
 Run the walk from `pricing`:
 
 ```sh
-python -m scripts.walk_graph --start pricing
+python -m scripts.walk_graph --start pricing --max-depth 8
 ```
 
 Trace the path array when the traversal reaches `legacy_tax_rules`. Explain why its edge back to `pricing` does not generate a row.

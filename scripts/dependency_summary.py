@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 
-from scripts.common import connect, load_query
+from scripts.common import connect, ensure_nodes_exist, load_query
 
 
 def main() -> None:
@@ -25,13 +25,15 @@ def main() -> None:
         parser.error("--max-depth must be zero or greater")
 
     with connect() as connection:
+        ensure_nodes_exist(connection, args.start)
         rows = connection.execute(
             load_query("04_dependency_summary.sql"),
             {"start": args.start, "max_depth": args.max_depth},
         ).fetchall()
 
     if not rows:
-        raise SystemExit(f"No reachable nodes from {args.start!r}.")
+        print(f"No dependencies reachable from {args.start!r}.")
+        return
 
     print(f"Dependencies reachable from {args.start!r}:")
     print("node                 nearest hops  simple paths")

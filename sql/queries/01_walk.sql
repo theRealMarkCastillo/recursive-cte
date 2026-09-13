@@ -1,6 +1,6 @@
--- Start at one node and visit every reachable node once per simple path.
--- The path_ids array is the cycle guard: do not visit a vertex already in
--- the current path.
+-- Start at one node and visit every reachable node once per simple path,
+-- bounded by max_depth. The path_ids array is the cycle guard: do not visit
+-- a vertex already in the current path.
 WITH RECURSIVE walk AS (
     -- Anchor member: one row for the starting vertex.
     SELECT
@@ -28,7 +28,8 @@ WITH RECURSIVE walk AS (
     FROM walk AS w
     JOIN graph_edges AS e ON e.from_node_id = w.id
     JOIN graph_nodes AS child ON child.id = e.to_node_id
-    WHERE NOT (child.id = ANY(w.path_ids))
+    WHERE w.depth < %(max_depth)s
+      AND NOT (child.id = ANY(w.path_ids))
 )
 SELECT
     depth,

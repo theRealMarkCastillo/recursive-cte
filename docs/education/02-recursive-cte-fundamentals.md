@@ -121,7 +121,7 @@ Open `sql/queries/01_walk.sql` and identify:
 Then run:
 
 ```sh
-python -m scripts.walk_graph --start api
+python -m scripts.walk_graph --start api --max-depth 8
 ```
 
 ## Checkpoint

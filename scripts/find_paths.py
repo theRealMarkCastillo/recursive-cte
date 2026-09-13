@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 
-from scripts.common import connect, load_query
+from scripts.common import connect, ensure_nodes_exist, load_query
 
 
 def main() -> None:
@@ -22,6 +22,7 @@ def main() -> None:
         parser.error("--max-depth must be zero or greater")
 
     with connect() as connection:
+        ensure_nodes_exist(connection, args.source, args.target)
         rows = connection.execute(
             load_query("02_find_paths.sql"),
             {

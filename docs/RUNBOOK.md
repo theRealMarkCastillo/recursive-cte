@@ -82,10 +82,16 @@ python -m scripts.shortest_path storefront postgres
 
 ## Routine verification
 
+Run the automated integration suite:
+
+```sh
+make test
+```
+
 Run all teaching examples:
 
 ```sh
-python -m scripts.walk_graph --start storefront
+python -m scripts.walk_graph --start storefront --max-depth 8
 python -m scripts.find_paths storefront postgres
 python -m scripts.shortest_path storefront postgres
 python -m scripts.dependency_summary --start storefront

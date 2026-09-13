@@ -1,4 +1,4 @@
-.PHONY: up down reset install walk paths shortest summary
+.PHONY: up down reset install walk paths shortest summary test
 
 up:
 	docker compose up -d --wait
@@ -14,7 +14,7 @@ install:
 	. .venv/bin/activate && python -m pip install -r requirements.txt
 
 walk:
-	. .venv/bin/activate && python -m scripts.walk_graph --start storefront
+	. .venv/bin/activate && python -m scripts.walk_graph --start storefront --max-depth 8
 
 paths:
 	. .venv/bin/activate && python -m scripts.find_paths storefront postgres
@@ -24,3 +24,6 @@ shortest:
 
 summary:
 	. .venv/bin/activate && python -m scripts.dependency_summary --start storefront
+
+test:
+	. .venv/bin/activate && python -m unittest discover -s tests -v

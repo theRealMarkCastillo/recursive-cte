@@ -104,7 +104,7 @@ python -m pip install -r requirements.txt
 Run the examples:
 
 ```sh
-python -m scripts.walk_graph --start storefront
+python -m scripts.walk_graph --start storefront --max-depth 8
 python -m scripts.find_paths storefront postgres
 python -m scripts.shortest_path storefront postgres
 python -m scripts.dependency_summary --start storefront
@@ -118,6 +118,7 @@ make walk
 make paths
 make shortest
 make summary
+make test
 ```
 
 The development defaults are:
@@ -162,6 +163,8 @@ recursive-cte/
 |   |-- find_paths.py
 |   |-- shortest_path.py
 |   `-- dependency_summary.py
+|-- tests/
+|   `-- test_graph_queries.py
 |-- sql/
 |   |-- 01-schema.sql
 |   |-- 02-seed.sql
