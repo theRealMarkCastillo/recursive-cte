@@ -1,0 +1,1 @@
+"""Practical recursive CTE examples."""

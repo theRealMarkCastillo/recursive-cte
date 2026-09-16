@@ -1,0 +1,33 @@
+WITH RECURSIVE role_closure AS (
+    SELECT
+        role.id AS role_id,
+        0::INTEGER AS depth,
+        ARRAY[role.id]::BIGINT[] AS path_ids
+    FROM rbac.users AS account
+    JOIN rbac.user_roles ON user_roles.user_id = account.id
+    JOIN rbac.roles AS role ON role.id = user_roles.role_id
+    WHERE account.name = %(user)s
+
+    UNION ALL
+
+    SELECT
+        inherited.id,
+        closure.depth + 1,
+        closure.path_ids || inherited.id
+    FROM role_closure AS closure
+    JOIN rbac.role_inheritance AS inheritance
+        ON inheritance.role_id = closure.role_id
+    JOIN rbac.roles AS inherited
+        ON inherited.id = inheritance.inherited_role_id
+    WHERE closure.depth < %(max_depth)s
+      AND NOT (inherited.id = ANY(closure.path_ids))
+)
+SELECT DISTINCT
+    permission.name AS permission,
+    role.name AS granted_by_role
+FROM role_closure AS closure
+JOIN rbac.roles AS role ON role.id = closure.role_id
+JOIN rbac.role_permissions ON role_permissions.role_id = role.id
+JOIN rbac.permissions AS permission
+    ON permission.id = role_permissions.permission_id
+ORDER BY permission, granted_by_role;

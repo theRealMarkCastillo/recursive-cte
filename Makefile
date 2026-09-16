@@ -1,4 +1,5 @@
-.PHONY: up down reset install walk paths shortest summary test
+.PHONY: up down reset install walk paths shortest summary test load-examples demos \
+	demo-org demo-bom demo-rbac demo-lineage demo-discussion demo-routes
 
 up:
 	docker compose up -d --wait
@@ -27,3 +28,26 @@ summary:
 
 test:
 	. .venv/bin/activate && python -m unittest discover -s tests -v
+
+load-examples:
+	. .venv/bin/activate && python -m scripts.load_examples
+
+demos: demo-org demo-bom demo-rbac demo-lineage demo-discussion demo-routes
+
+demo-org:
+	. .venv/bin/activate && python -m examples.org_chart.demo
+
+demo-bom:
+	. .venv/bin/activate && python -m examples.bill_of_materials.demo
+
+demo-rbac:
+	. .venv/bin/activate && python -m examples.permissions.demo
+
+demo-lineage:
+	. .venv/bin/activate && python -m examples.data_lineage.demo
+
+demo-discussion:
+	. .venv/bin/activate && python -m examples.discussion_threads.demo
+
+demo-routes:
+	. .venv/bin/activate && python -m examples.weighted_routes.demo

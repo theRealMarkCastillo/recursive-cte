@@ -2,7 +2,7 @@
 
 A runnable lab for learning how PostgreSQL can store a directed graph in ordinary tables and traverse it with `WITH RECURSIVE`.
 
-The project includes a PostgreSQL 16 container, a seeded service-dependency graph, four parameterized SQL queries, Python command-line clients, a guided course, and an operations runbook.
+The project includes a PostgreSQL 16 container, a seeded service-dependency graph, four core queries, six practical use-case modules, Python command-line clients, a guided course, and an operations runbook.
 
 ## System map
 
@@ -121,6 +121,14 @@ make summary
 make test
 ```
 
+Run the six practical use cases:
+
+```sh
+make demos
+```
+
+They cover organization charts, bills of materials, permission inheritance, data lineage, discussion threads, and weighted routes. Start with the [practical examples guide](examples/README.md).
+
 The development defaults are:
 
 ```text
@@ -147,6 +155,7 @@ set +a
 4. [Safety, performance, and PostgreSQL features](docs/education/04-safety-and-performance.md)
 5. [Exercises and solutions](docs/education/05-exercises.md)
 6. [Choosing PostgreSQL or a graph database](docs/education/06-choosing-a-graph-approach.md)
+7. [Practical recursive CTE use cases](docs/education/07-practical-use-cases.md)
 
 For normal operation and troubleshooting, use the [runbook](docs/RUNBOOK.md).
 
@@ -165,6 +174,13 @@ recursive-cte/
 |   `-- dependency_summary.py
 |-- tests/
 |   `-- test_graph_queries.py
+|-- examples/
+|   |-- org_chart/
+|   |-- bill_of_materials/
+|   |-- permissions/
+|   |-- data_lineage/
+|   |-- discussion_threads/
+|   `-- weighted_routes/
 |-- sql/
 |   |-- 01-schema.sql
 |   |-- 02-seed.sql
@@ -176,7 +192,7 @@ recursive-cte/
 `-- docs/
     |-- RUNBOOK.md
     `-- education/
-        `-- 01-... through 06-...
+        `-- 01-... through 07-...
 ```
 
 The query files use psycopg named parameters such as `%(start)s`. The schema and seed files are mounted into PostgreSQL's initialization directory and run only when the Docker volume is first created.

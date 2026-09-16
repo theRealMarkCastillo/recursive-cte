@@ -88,6 +88,18 @@ Run the automated integration suite:
 make test
 ```
 
+Load all practical example schemas explicitly (each demo also loads its own):
+
+```sh
+make load-examples
+```
+
+Run every practical demo:
+
+```sh
+make demos
+```
+
 Run all teaching examples:
 
 ```sh
@@ -126,6 +138,13 @@ SELECT COUNT(*) AS edges FROM graph_edges;
 ```
 
 The seed contains 14 nodes and 19 edges.
+
+The practical modules use separate `org`, `bom`, `rbac`, `lineage`,
+`discussion`, and `routes` schemas. List them with:
+
+```sql
+\dn
+```
 
 Exit with:
 
